@@ -595,7 +595,10 @@ Tabs.Teleport:AddButton({
     end
 })
 
-
+local AntiAFKToggle = Tabs.Player:AddToggle("AntiAFKToggle", {
+    Title = "Anti AFK",
+    Default = false
+})
 
 
 -- Addons:
