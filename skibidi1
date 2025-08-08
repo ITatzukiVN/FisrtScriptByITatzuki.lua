@@ -96,10 +96,10 @@ local Window = Fluent:CreateWindow({
 
 --Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
 local Tabs = {
-    Main = Window:AddTab({ Title = "Main", Icon = "" }),
-    Farm = Window:AddTab({ Title = "Farm", Icon = "" }),
-    Shop = Window:AddTab({ Title = "Shop", Icon = "" }),
-    Teleport = Window:AddTab({ Title = "Teleport", Icon = "" }),
+    Main = Window:AddTab({ Title = "Main", Icon = "🗿" }),
+    Farm = Window:AddTab({ Title = "Farm", Icon = "💸" }),
+    Shop = Window:AddTab({ Title = "Shop", Icon = "🛒" }),
+    Teleport = Window:AddTab({ Title = "Teleport", Icon = "✈️" }),
     Player = Window:AddTab({ Title = "Player", Icon = "" }),
 }
 
@@ -110,7 +110,7 @@ do
         Title = "Thông Báo",
         Content = "Chào Mừng Đã Đến Với ITatzuki Hub🗿",
         SubContent = "Script Bao Húp 🤑", -- Optional
-        Duration = 5 -- Set to nil to make the notification not disappear
+        Duration = 3 -- Set to nil to make the notification not disappear
     })
 
 
@@ -234,7 +234,7 @@ end)
 })
 
 local Button = Tabs.Main:AddButton({
-    Title = "Ac6",
+    Title = "Ac6🎵",
     Description = "Nhấn để mở script",
     Callback = function()
         -- Script của bạn đặt trong đây
