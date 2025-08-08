@@ -369,7 +369,7 @@ end)
 _G.autoFarm = false
 _G.autoFarmRunning = false
 
-local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Auto Farm Coin", Default = false })
+local Toggle = Tabs.Farm:AddToggle("MyToggle", {Title = "Auto Farm Coin", Default = false })
 
 Toggle:OnChanged(function()
     if Options.MyToggle.Value then
