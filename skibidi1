@@ -816,7 +816,7 @@ Tabs.Teleport:AddButton({
 local antiAFKEnabled = false
 local antiAFKConnection
 
-Player:AddToggle("AntiAFKToggle", {
+Tab.Player:AddToggle("AntiAFKToggle", {
     Title = "Anti AFK",
     Default = false,
     Callback = function(state)
