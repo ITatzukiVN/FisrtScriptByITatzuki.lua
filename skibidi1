@@ -596,32 +596,6 @@ Tabs.Teleport:AddButton({
 })
 
 
--- ================== Anti AFK Toggle ==================
-local antiAFKEnabled = false
-local antiAFKConnection
-
-local AntiAFKToggle = Tabs.Player:AddToggle("AntiAFKToggle", {
-    Title = "Anti AFK",
-    Default = false
-})
-    Callback = function(state)
-        antiAFKEnabled = state
-        if antiAFKEnabled then
-            local vu = game:GetService("VirtualUser")
-            antiAFKConnection = game.Players.LocalPlayer.Idled:Connect(function()
-                vu:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
-                task.wait(1)
-                vu:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
-            end)
-        else
-            if antiAFKConnection then
-                antiAFKConnection:Disconnect()
-                antiAFKConnection = nil
-            end
-        end
-    end
-})
-
 
 
 -- Addons:
