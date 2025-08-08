@@ -817,7 +817,7 @@ local antiAFKEnabled = false
 local antiAFKConnection
 
 -- Toggle Anti-AFK
-local Toggle Anti AFK = Tabs.Player:AddToggle("AntiAFKToggle", {
+Tabs.Player:AddToggle("AntiAFKToggle", {
     Title = "Anti AFK",
     Default = false,
     Callback = function(state)
