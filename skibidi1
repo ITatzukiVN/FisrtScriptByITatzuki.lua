@@ -1,3 +1,40 @@
+-- 🕒 TẠO MÀN HÌNH CHỜ
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local loadingGui = Instance.new("ScreenGui")
+loadingGui.Name = "LoadingScreen"
+loadingGui.IgnoreGuiInset = true
+loadingGui.Parent = player:WaitForChild("PlayerGui")
+
+local bg = Instance.new("Frame")
+bg.Size = UDim2.new(1, 0, 1, 0)
+bg.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+bg.Parent = loadingGui
+
+local textLabel = Instance.new("TextLabel")
+textLabel.AnchorPoint = Vector2.new(0.5, 0.5)
+textLabel.Position = UDim2.new(0.5, 0, 0.5, 0)
+textLabel.Size = UDim2.new(0, 400, 0, 50)
+textLabel.BackgroundTransparency = 1
+textLabel.Text = "🔄 Đang tải ITatzuki Hub..."
+textLabel.TextSize = 28
+textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+textLabel.Font = Enum.Font.GothamBold
+textLabel.Parent = bg
+
+-- 🛑 GIẢ LẬP THỜI GIAN TẢI
+wait(1) -- bạn có thể tăng/giảm để hợp lý hơn
+
+-- 📥 TẢI FLUENT
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+-- ✅ XÓA MÀN HÌNH CHỜ SAU KHI TẢI XONG
+loadingGui:Destroy()
+
+-- 📝 Tiếp tục phần code gốc của bạn
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
