@@ -366,6 +366,59 @@ task.spawn(function()
     end
 end)
 
+_G.autoFarm = false
+_G.autoFarmRunning = false
+
+local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Auto Farm Coin", Default = false })
+
+Toggle:OnChanged(function()
+    if Options.MyToggle.Value then
+        _G.autoFarm = true
+        if not _G.autoFarmRunning then
+            _G.autoFarmRunning = true
+
+            task.spawn(function()
+                local Players = game:GetService("Players")
+                local player = Players.LocalPlayer or Players:GetPlayers()[1]
+                local delayTime = 1
+
+                -- Lấy tất cả part tên "Respawning Coin"
+                local teleportParts = {}
+                for _, obj in ipairs(workspace:GetDescendants()) do
+                    if obj:IsA("BasePart") and obj.Name == "Respawning Coin" then
+                        table.insert(teleportParts, obj)
+                    end
+                end
+
+                if #teleportParts == 0 then
+                    warn("Không tìm thấy part nào tên 'Respawning Coin'")
+                    _G.autoFarmRunning = false
+                    return
+                end
+
+                -- Bắt đầu vòng lặp farm
+                while _G.autoFarm do
+                    local char = player.Character or player.CharacterAdded:Wait()
+                    local hrp = char:FindFirstChild("HumanoidRootPart")
+
+                    for _, part in ipairs(teleportParts) do
+                        if not _G.autoFarm then break end -- ⚠ kiểm tra dừng giữa vòng
+                        if part and hrp then
+                            hrp.CFrame = part.CFrame
+                        end
+                        wait(delayTime)
+                    end
+                end
+
+                _G.autoFarmRunning = false
+                print("Dừng auto farm.")
+            end)
+        end
+    else
+        _G.autoFarm = false
+    end
+end)
+
 
 
 local targetItem = "Classic Sword: 200 VND" -- ← Đổi tên món bạn muốn mua
