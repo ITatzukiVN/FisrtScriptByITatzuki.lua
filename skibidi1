@@ -1,94 +1,85 @@
--- 🕒 MÀN HÌNH CHỜ VỚI THANH TIẾN TRÌNH + ANIMATION
 local Players = game:GetService("Players")
-local player = Players.LocalPlayer
 local TweenService = game:GetService("TweenService")
+local player = Players.LocalPlayer
 
+-- GUI Loading
 local loadingGui = Instance.new("ScreenGui")
 loadingGui.Name = "LoadingScreen"
 loadingGui.IgnoreGuiInset = true
-loadingGui.ResetOnSpawn = false
 loadingGui.Parent = player:WaitForChild("PlayerGui")
 
--- Nền
 local bg = Instance.new("Frame")
 bg.Size = UDim2.new(1, 0, 1, 0)
 bg.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 bg.Parent = loadingGui
 
--- Tiêu đề
 local title = Instance.new("TextLabel")
 title.AnchorPoint = Vector2.new(0.5, 0.5)
-title.Position = UDim2.new(0.5, 0, 0.4, 0)
-title.Size = UDim2.new(0, 500, 0, 50)
+title.Position = UDim2.new(0.5, 0, 0.45, 0)
+title.Size = UDim2.new(0, 400, 0, 50)
 title.BackgroundTransparency = 1
-title.Text = "ITatzuki Hub"
-title.TextSize = 36
+title.Text = "🔄 Đang tải ITatzuki Hub..."
+title.TextSize = 28
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
 title.Font = Enum.Font.GothamBold
 title.Parent = bg
 
--- Trạng thái
-local status = Instance.new("TextLabel")
-status.AnchorPoint = Vector2.new(0.5, 0.5)
-status.Position = UDim2.new(0.5, 0, 0.5, 0)
-status.Size = UDim2.new(0, 400, 0, 30)
-status.BackgroundTransparency = 1
-status.Text = "Đang tải script"
-status.TextSize = 22
-status.TextColor3 = Color3.fromRGB(200, 200, 200)
-status.Font = Enum.Font.Gotham
-status.Parent = bg
+-- Progress bar container
+local progressBg = Instance.new("Frame")
+progressBg.AnchorPoint = Vector2.new(0.5, 0)
+progressBg.Position = UDim2.new(0.5, 0, 0.55, 0)
+progressBg.Size = UDim2.new(0, 400, 0, 20)
+progressBg.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+progressBg.BorderSizePixel = 0
+progressBg.Parent = bg
 
--- Khung progress bar
-local progressBarBG = Instance.new("Frame")
-progressBarBG.AnchorPoint = Vector2.new(0.5, 0.5)
-progressBarBG.Position = UDim2.new(0.5, 0, 0.6, 0)
-progressBarBG.Size = UDim2.new(0, 400, 0, 20)
-progressBarBG.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-progressBarBG.BorderSizePixel = 0
-progressBarBG.Parent = bg
+-- Progress bar fill
+local progressFill = Instance.new("Frame")
+progressFill.Size = UDim2.new(0, 0, 1, 0)
+progressFill.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+progressFill.BorderSizePixel = 0
+progressFill.Parent = progressBg
 
--- Thanh chạy
-local progressBar = Instance.new("Frame")
-progressBar.Size = UDim2.new(0, 0, 1, 0)
-progressBar.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
-progressBar.BorderSizePixel = 0
-progressBar.Parent = progressBarBG
-
--- Animation dấu chấm
-task.spawn(function()
-    local dots = ""
-    while loadingGui.Parent do
-        dots = dots .. "."
-        if #dots > 3 then dots = "" end
-        status.Text = "Đang tải script" .. dots
-        task.wait(0.4)
-    end
-end)
-
--- Thanh tiến trình từ 0% → 100%
-for i = 1, 100 do
-    TweenService:Create(progressBar, TweenInfo.new(0.02), {
-        Size = UDim2.new(i/100, 0, 1, 0)
-    }):Play()
-    task.wait(0.02)
+-- Tween animation function
+local function updateProgress(percent)
+    TweenService:Create(
+        progressFill,
+        TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+        {Size = UDim2.new(percent, 0, 1, 0)}
+    ):Play()
 end
 
--- 📥 Bắt đầu tải Fluent sau khi progress xong
+-- Giả lập tải từng bước
+for i = 1, 100 do
+    updateProgress(i/100)
+    wait(0.02) -- Tốc độ chạy (0.02s mỗi bước)
+end
+
+-- Tải Fluent sau khi chạy progress bar
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
--- ✅ Ẩn màn hình chờ
-TweenService:Create(bg, TweenInfo.new(0.5), {BackgroundTransparency = 1}):Play()
-TweenService:Create(title, TweenInfo.new(0.5), {TextTransparency = 1}):Play()
-TweenService:Create(status, TweenInfo.new(0.5), {TextTransparency = 1}):Play()
-TweenService:Create(progressBarBG, TweenInfo.new(0.5), {BackgroundTransparency = 1}):Play()
-TweenService:Create(progressBar, TweenInfo.new(0.5), {BackgroundTransparency = 1}):Play()
-task.wait(0.5)
+-- Animation ẩn GUI
+TweenService:Create(
+    bg,
+    TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+    {BackgroundTransparency = 1}
+):Play()
+TweenService:Create(
+    title,
+    TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+    {TextTransparency = 1}
+):Play()
+TweenService:Create(
+    progressBg,
+    TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+    {BackgroundTransparency = 1}
+):Play()
+
+wait(0.5)
 loadingGui:Destroy()
 
--- 📝 Tiếp tục script gốc ở đây
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
