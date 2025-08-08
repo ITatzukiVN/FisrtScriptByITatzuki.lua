@@ -100,7 +100,7 @@ local Tabs = {
     Farm = Window:AddTab({ Title = "Farm", Icon = "💸" }),
     Shop = Window:AddTab({ Title = "Shop", Icon = "🛒" }),
     Teleport = Window:AddTab({ Title = "Teleport", Icon = "✈️" }),
-    Player = Window:AddTab({ Title = "Player", Icon = "" }),
+    Player = Window:AddTab({ Title = "Player", Icon = "👤" }),
 }
 
 local Options = Fluent.Options
@@ -817,7 +817,7 @@ local antiAFKEnabled = false
 local antiAFKConnection
 
 -- Toggle Anti-AFK
-Tab.Player:AddToggle("AntiAFKToggle", {
+local Toggle Anti AFK = Tabs.Player:AddToggle("AntiAFKToggle", {
     Title = "Anti AFK",
     Default = false,
     Callback = function(state)
