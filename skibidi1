@@ -819,6 +819,7 @@ local antiAFKConnection
 Tab.Player:AddToggle("AntiAFKToggle", {
     Title = "Anti AFK",
     Default = false,
+})
     Callback = function(state)
         antiAFKEnabled = state
         if antiAFKEnabled then
