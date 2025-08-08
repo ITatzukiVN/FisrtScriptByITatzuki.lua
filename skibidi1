@@ -1,0 +1,673 @@
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+local Window = Fluent:CreateWindow({
+    Title = "ITatzuki Hub " .. Fluent.Version,
+    SubTitle = "by ITatzuki",
+    TabWidth = 160,
+    Size = UDim2.fromOffset(580, 460),
+    Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.LeftControl -- Used when theres no MinimizeKeybind
+})
+
+--Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
+local Tabs = {
+    Main = Window:AddTab({ Title = "Main", Icon = "" }),
+    Farm = Window:AddTab({ Title = "Farm", Icon = "" }),
+    Shop = Window:AddTab({ Title = "Shop", Icon = "" }),
+    Teleport = Window:AddTab({ Title = "Teleport", Icon = "" }),
+    Player = Window:AddTab({ Title = "Player", Icon = "" }),
+}
+
+local Options = Fluent.Options
+
+do
+    Fluent:Notify({
+        Title = "Thông Báo",
+        Content = "Chào Mừng Đã Đến Với ITatzuki Hub🗿",
+        SubContent = "Script Bao Húp 🤑", -- Optional
+        Duration = 5 -- Set to nil to make the notification not disappear
+    })
+
+
+
+    Tabs.Main:AddParagraph({
+        Title = "Script Thiếu Kinh Phí",
+        Content = "Không có nhà tài trợ 😔"
+    })
+
+
+end
+
+local Button = Tabs.Main:AddButton({
+    Title = "infinite yield",
+    Description = "Nhấn để mở script",
+    Callback = function()
+        -- Script của bạn đặt trong đây
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+
+        -- Ví dụ: Teleport tới một part
+        local Players = game:GetService("Players")
+        local player = Players.LocalPlayer
+        local char = player.Character or player.CharacterAdded:Wait()
+        local hrp = char:WaitForChild("HumanoidRootPart")
+
+        local targetPart = workspace:FindFirstChild("TargetPart")
+        if targetPart then
+            hrp.CFrame = targetPart.CFrame + Vector3.new(0, 5, 0)
+        else
+            warn("Không tìm thấy part!")
+        end
+    end
+})
+
+local Button = Tabs.Main:AddButton({
+    Title = "Trolling",
+    Description = "Nhấn để mở script",
+    Callback = function()
+        -- Script của bạn đặt trong đây
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub/main/FE%20Trolling%20GUI.luau"))()
+
+        -- Ví dụ: Teleport tới một part
+        local Players = game:GetService("Players")
+        local player = Players.LocalPlayer
+        local char = player.Character or player.CharacterAdded:Wait()
+        local hrp = char:WaitForChild("HumanoidRootPart")
+
+        local targetPart = workspace:FindFirstChild("TargetPart")
+        if targetPart then
+            hrp.CFrame = targetPart.CFrame + Vector3.new(0, 5, 0)
+        else
+            warn("Không tìm thấy part!")
+        end
+    end
+})
+
+local Button = Tabs.Main:AddButton({
+    Title = "Fling",
+    Description = "Nhấn để mở script",
+    Callback = function()
+        -- Script của bạn đặt trong đây
+        loadstring(game:HttpGet(('https://raw.githubusercontent.com/0Ben1/fe/main/obf_rf6iQURzu1fqrytcnLBAvW34C9N55kS9g9G3CKz086rC47M6632sEd4ZZYB0AYgV.lua.txt'),true))()
+
+        -- Ví dụ: Teleport tới một part
+        local Players = game:GetService("Players")
+        local player = Players.LocalPlayer
+        local char = player.Character or player.CharacterAdded:Wait()
+        local hrp = char:WaitForChild("HumanoidRootPart")
+
+        local targetPart = workspace:FindFirstChild("TargetPart")
+        if targetPart then
+            hrp.CFrame = targetPart.CFrame + Vector3.new(0, 5, 0)
+        else
+            warn("Không tìm thấy part!")
+        end
+    end
+})
+
+local Button = Tabs.Main:AddButton({
+    Title = "Diệt Sát Server🗣️🔥",
+    Description = "Nhấn để mở script",
+    Callback = function()
+        -- Script của bạn đặt trong đây
+        print("Đã bấm nút!")
+
+        -- Ví dụ: Teleport tới một part
+        local Players = game:GetService("Players")
+        local player = Players.LocalPlayer
+        local char = player.Character or player.CharacterAdded:Wait()
+        local hrp = char:WaitForChild("HumanoidRootPart")
+
+        local targetPart = workspace:FindFirstChild("TargetPart")
+        if targetPart then
+            hrp.CFrame = targetPart.CFrame + Vector3.new(0, 5, 0)
+        else
+            warn("Không tìm thấy part!")
+        end
+    end
+})
+
+-- Tạo Toggle 500
+local Farm500Toggle = Tabs.Farm:AddToggle("Farm500Toggle", {
+    Title = "Farm 500",
+    Default = false
+})
+
+-- Dịch vụ & người chơi
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local backpack = player:WaitForChild("Backpack")
+local character = player.Character or player.CharacterAdded:Wait()
+local hrp = character:WaitForChild("HumanoidRootPart")
+
+-- Thông tin nhiệm vụ
+local requiredToolName = "Package"
+local questGiver = workspace.ChoKhach2System.KhongXoa2:WaitForChild("GetJobPart")
+local completePart = workspace.ChoKhach2System.KhongXoa2:WaitForChild("TargetPart")
+
+-- Hàm dịch chuyển
+local function teleportTo(part)
+    if part and hrp then
+        hrp.CFrame = part.CFrame + Vector3.new(0, 1, 0)
+    end
+end
+
+-- Kích hoạt ProximityPrompt
+local function triggerPrompt(part)
+    local prompt = part:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+        return true
+    end
+    return false
+end
+
+-- Farm liên tục không cần đợi item
+local function autoQuestFast()
+    teleportTo(questGiver)
+    wait(0.3)
+    triggerPrompt(questGiver)
+    wait(0.3)
+    teleportTo(completePart)
+end
+
+-- Vòng lặp toggle
+task.spawn(function()
+    while true do
+        if Options.Farm500Toggle.Value then
+            autoQuestFast()
+            wait(0.01) -- càng thấp càng nhanh
+        else
+            wait(0.5)
+        end
+    end
+end)
+
+-- Tạo Toggle 700
+local Farm700Toggle = Tabs.Farm:AddToggle("Farm700Toggle", {
+    Title = "Farm 700",
+    Default = false
+})
+
+-- Dịch vụ & người chơi
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local backpack = player:WaitForChild("Backpack")
+local character = player.Character or player.CharacterAdded:Wait()
+local hrp = character:WaitForChild("HumanoidRootPart")
+
+-- Thông tin nhiệm vụ (★ Đã thay đổi đường dẫn đúng như bạn yêu cầu)
+local requiredToolName = "Package"
+local questGiver = workspace.ChoKhachSystem.KhongXoa:WaitForChild("GetJobPart")
+local completePart = workspace.ChoKhachSystem.KhongXoa:WaitForChild("TargetPart")
+
+-- Hàm dịch chuyển
+local function teleportTo(part)
+    if part and hrp then
+        hrp.CFrame = part.CFrame + Vector3.new(0, 1, 0)
+    end
+end
+
+-- Kích hoạt ProximityPrompt
+local function triggerPrompt(part)
+    local prompt = part:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+        return true
+    end
+    return false
+end
+
+-- Farm liên tục không cần đợi có item
+local function autoQuestFast()
+    teleportTo(questGiver)
+    wait(0.3)
+    triggerPrompt(questGiver)
+    wait(0.3)
+    teleportTo(completePart)
+end
+
+-- Vòng lặp toggle
+task.spawn(function()
+    while true do
+        if Options.Farm700Toggle.Value then
+            autoQuestFast()
+            wait(0.01) -- càng thấp càng nhanh
+        else
+            wait(0.5)
+        end
+    end
+end)
+
+
+
+local targetItem = "Classic Sword: 200 VND" -- ← Đổi tên món bạn muốn mua
+
+Tabs.Shop:AddButton({
+    Title ="Sword",
+    Description = "Tốn 200VNĐ",
+    Callback = function()
+        local parentFolder = workspace:FindFirstChild("NK ITEM") -- ← sửa lại tên đúng
+        local count = 0
+
+        if parentFolder then
+            for _, obj in pairs(parentFolder:GetDescendants()) do
+                if obj:IsA("ClickDetector") and obj.Parent and obj.Parent.Name == "Toolshop" then
+                    local shop = obj.Parent
+                    local surfaceGui = shop:FindFirstChildOfClass("SurfaceGui")
+
+                    if surfaceGui then
+                        for _, guiObj in ipairs(surfaceGui:GetDescendants()) do
+                            if guiObj:IsA("TextLabel") or guiObj:IsA("TextButton") then
+                                if string.lower(guiObj.Text):find(string.lower(targetItem)) then
+                                    fireclickdetector(obj)
+                                    count += 1
+                                    break
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        else
+            warn("Không tìm thấy thư mục chứa toolshop.")
+        end
+
+        Fluent:Notify({
+            Title = "Đã Mua Sword",
+            Content = "-200VNĐ",
+            Duration = 3
+        })
+    end
+})
+
+
+
+
+local targetItem = "BloxyCola: 100 VND" -- ← Đổi tên món bạn muốn mua
+
+Tabs.Shop:AddButton({
+    Title ="BloxyCola",
+    Description = "Tốn 100VNĐ",
+    Callback = function()
+        local parentFolder = workspace:FindFirstChild("NK ITEM") -- ← sửa lại tên đúng
+        local count = 0
+
+        if parentFolder then
+            for _, obj in pairs(parentFolder:GetDescendants()) do
+                if obj:IsA("ClickDetector") and obj.Parent and obj.Parent.Name == "Toolshop" then
+                    local shop = obj.Parent
+                    local surfaceGui = shop:FindFirstChildOfClass("SurfaceGui")
+
+                    if surfaceGui then
+                        for _, guiObj in ipairs(surfaceGui:GetDescendants()) do
+                            if guiObj:IsA("TextLabel") or guiObj:IsA("TextButton") then
+                                if string.lower(guiObj.Text):find(string.lower(targetItem)) then
+                                    fireclickdetector(obj)
+                                    count += 1
+                                    break
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        else
+            warn("Không tìm thấy thư mục chứa toolshop.")
+        end
+
+        Fluent:Notify({
+            Title = "Đã Mua BloxyCola",
+            Content = "-100VNĐ",
+            Duration = 3
+        })
+    end
+})
+
+
+
+
+local targetItem = "RPG: 100000 VND" -- ← Đổi tên món bạn muốn mua
+
+Tabs.Shop:AddButton({
+    Title ="RGB",
+    Description = "Tốn 100000VNĐ",
+    Callback = function()
+        local parentFolder = workspace:FindFirstChild("NK ITEM") -- ← sửa lại tên đúng
+        local count = 0
+
+        if parentFolder then
+            for _, obj in pairs(parentFolder:GetDescendants()) do
+                if obj:IsA("ClickDetector") and obj.Parent and obj.Parent.Name == "Toolshop" then
+                    local shop = obj.Parent
+                    local surfaceGui = shop:FindFirstChildOfClass("SurfaceGui")
+
+                    if surfaceGui then
+                        for _, guiObj in ipairs(surfaceGui:GetDescendants()) do
+                            if guiObj:IsA("TextLabel") or guiObj:IsA("TextButton") then
+                                if string.lower(guiObj.Text):find(string.lower(targetItem)) then
+                                    fireclickdetector(obj)
+                                    count += 1
+                                    break
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        else
+            warn("Không tìm thấy thư mục chứa toolshop.")
+        end
+
+        Fluent:Notify({
+            Title = "Đã Mua RGB",
+            Content = "-100000VNĐ",
+            Duration = 3
+        })
+    end
+})
+
+
+
+
+-- Tạo Toggle để bật/tắt tăng tốc độ
+local SpeedToggle = Tabs.Player:AddToggle("SpeedToggle", {
+    Title = "Tăng tốc độ",
+    Default = false
+})
+
+
+
+-- Tạo Slider để điều chỉnh tốc độ
+local SpeedSlider = Tabs.Player:AddSlider("SpeedSlider", {
+    Title = "Tốc độ chạy",
+    Description = "Điều chỉnh tốc độ nhân vật",
+    Default = 16,
+    Min = 16,
+    Max = 100,
+    Rounding = 1
+})
+
+
+-- Theo dõi toggle và slider
+task.spawn(function()
+    while true do
+        if Options.SpeedToggle.Value then
+            local Players = game:GetService("Players")
+            local player = Players.LocalPlayer
+            local character = player.Character or player.CharacterAdded:Wait()
+            local humanoid = character:FindFirstChildOfClass("Humanoid")
+
+            if humanoid then
+                humanoid.WalkSpeed = Options.SpeedSlider.Value
+            end
+        else
+            -- Reset tốc độ nếu tắt toggle
+            local Players = game:GetService("Players")
+            local player = Players.LocalPlayer
+            local character = player.Character or player.CharacterAdded:Wait()
+            local humanoid = character:FindFirstChildOfClass("Humanoid")
+
+            if humanoid and humanoid.WalkSpeed ~= 16 then
+                humanoid.WalkSpeed = 16
+            end
+        end
+        wait(0.2)
+    end
+end)
+
+
+
+-- Tạo Toggle để bật/tắt chế độ nhảy cao
+local JumpToggle = Tabs.Player:AddToggle("JumpToggle", {
+    Title = "Bật/Tắt Nhảy Cao",
+    Default = false
+})
+
+-- Tạo Slider để chỉnh độ cao nhảy
+local JumpHeightSlider = Tabs.Player:AddSlider("JumpPowerSlider", {
+    Title = "Chỉnh Độ Cao Nhảy",
+    Description = "Chọn mức độ nhảy cao",
+    Default = 50,
+    Min = 50,
+    Max = 200,
+    Rounding = 0,
+})
+
+-- Theo dõi thay đổi toggle và slider
+task.spawn(function()
+    while true do
+        local humanoid = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+        if humanoid then
+            if Options.JumpToggle.Value then
+                humanoid.UseJumpPower = true
+                humanoid.JumpPower = Options.JumpPowerSlider.Value
+            else
+                humanoid.JumpPower = 50 -- Reset về mặc định khi tắt
+            end
+        end
+        wait(0.1)
+    end
+end)
+
+
+
+-- Tạo Toggle đi xuyên tường
+local NoClipToggle = Tabs.Player:AddToggle("NoClipToggle", {
+    Title = "Đi Xuyên Tường",
+    Default = false
+})
+
+-- Biến trạng thái
+local noclip = false
+
+-- Khi toggle thay đổi
+Options.NoClipToggle:OnChanged(function(value)
+    noclip = value
+
+    -- Khi tắt, bật lại CanCollide = true cho nhân vật
+    if not noclip then
+        local char = game.Players.LocalPlayer.Character
+        if char then
+            for _, part in pairs(char:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    part.CanCollide = true
+                end
+            end
+        end
+    end
+end)
+
+-- Vòng lặp xuyên tường
+game:GetService("RunService").Stepped:Connect(function()
+    if noclip then
+        local char = game.Players.LocalPlayer.Character
+        if char then
+            for _, part in pairs(char:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    part.CanCollide = false
+                end
+            end
+        end
+    end
+end)
+
+
+
+-- Toggle Bay kiểu Infinite Yield
+local FlyToggle = Tabs.Player:AddToggle("FlyToggle", {
+    Title = "Fly",
+    Default = false
+})
+
+-- Slider điều chỉnh tốc độ bay
+local FlySpeedSlider = Tabs.Player:AddSlider("FlySpeedSlider", {
+    Title = "Fly Speed",
+    Default = 50,
+    Min = 10,
+    Max = 200,
+    Rounding = 0
+})
+
+-- Các dịch vụ cần thiết
+local Players = game:GetService("Players")
+local UIS = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local hrp = character:WaitForChild("HumanoidRootPart")
+
+-- Trạng thái và setup
+local flying = false
+local flySpeed = FlySpeedSlider.Value
+local BV = nil
+local control = {F = 0, B = 0, L = 0, R = 0, U = 0, D = 0}
+
+-- Cập nhật tốc độ khi slider thay đổi
+FlySpeedSlider:OnChanged(function(val)
+    flySpeed = val
+end)
+
+-- Cập nhật phím điều khiển
+UIS.InputBegan:Connect(function(input, gp)
+    if gp then return end
+    if input.KeyCode == Enum.KeyCode.W then control.F = 1 end
+    if input.KeyCode == Enum.KeyCode.S then control.B = -1 end
+    if input.KeyCode == Enum.KeyCode.A then control.L = -1 end
+    if input.KeyCode == Enum.KeyCode.D then control.R = 1 end
+end)
+
+UIS.InputEnded:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.W then control.F = 0 end
+    if input.KeyCode == Enum.KeyCode.S then control.B = 0 end
+    if input.KeyCode == Enum.KeyCode.A then control.L = 0 end
+    if input.KeyCode == Enum.KeyCode.D then control.R = 0 end
+    if input.KeyCode == Enum.KeyCode.Space then control.U = 0 end
+    if input.KeyCode == Enum.KeyCode.LeftControl then control.D = 0 end
+end)
+
+-- Bật / Tắt bay
+Options.FlyToggle:OnChanged(function(state)
+    flying = state
+    if flying then
+        BV = Instance.new("BodyVelocity")
+        BV.Velocity = Vector3.zero
+        BV.MaxForce = Vector3.new(1e5, 1e5, 1e5)
+        BV.P = 1250
+        BV.Name = "FlyVelocity"
+        BV.Parent = hrp
+    else
+        if BV then
+            BV:Destroy()
+            BV = nil
+        end
+        hrp.Velocity = Vector3.zero
+    end
+end)
+
+-- Vòng lặp bay
+RunService.RenderStepped:Connect(function()
+    if flying and BV then
+        local camCF = workspace.CurrentCamera.CFrame
+        local move = Vector3.zero
+        move += camCF.LookVector * (control.F + control.B)
+        move += camCF.RightVector * (control.R + control.L)
+        move += camCF.UpVector * (control.U + control.D)
+        if move.Magnitude > 0 then
+            BV.Velocity = move.Unit * flySpeed
+        else
+            BV.Velocity = Vector3.zero
+        end
+    end
+end)
+
+
+
+-- Tabs.Teleport đã được tạo sẵn
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+
+-- Danh sách tọa độ dịch chuyển
+local teleportLocations = {
+    ["Sảnh"] = Vector3.new(48, 5, -2059),
+    ["Cafe"] = Vector3.new(622, 3, -941),
+    ["Sân Bay Giang Son"] = Vector3.new(4697, 1, -1260),
+    ["Khu Sơn Xe"] = Vector3.new(1944, 1, -1092)
+}
+
+-- Lưu lựa chọn người dùng
+local selectedLocation = nil
+
+-- Dropdown chọn địa điểm
+Tabs.Teleport:AddDropdown("LocationDropdown", {
+    Title = "Chọn địa điểm",
+    Values = table.pack(unpack((function()
+        local keys = {}
+        for name, _ in pairs(teleportLocations) do
+            table.insert(keys, name)
+        end
+        return keys
+    end)())),
+    Multi = false,
+    Default = nil
+}):OnChanged(function(value)
+    selectedLocation = teleportLocations[value]
+end)
+
+-- Nút xác nhận dịch chuyển
+Tabs.Teleport:AddButton({
+    Title = "Dịch Chuyển",
+    Description = "Di chuyển tới địa điểm đã chọn",
+    Callback = function()
+        if selectedLocation and player.Character then
+            hrp = player.Character:FindFirstChild("HumanoidRootPart")
+            if hrp then
+                hrp.CFrame = CFrame.new(selectedLocation)
+            end
+        else
+            warn("Chưa chọn địa điểm hoặc chưa có nhân vật.")
+        end
+    end
+})
+
+
+-- Addons:
+-- SaveManager (Allows you to have a configuration system)
+-- InterfaceManager (Allows you to have a interface managment system)
+
+-- Hand the library over to our managers
+SaveManager:SetLibrary(Fluent)
+InterfaceManager:SetLibrary(Fluent)
+
+-- Ignore keys that are used by ThemeManager.
+-- (we dont want configs to save themes, do we?)
+SaveManager:IgnoreThemeSettings()
+
+-- You can add indexes of elements the save manager should ignore
+SaveManager:SetIgnoreIndexes({})
+
+-- use case for doing it this way:
+-- a script hub could have themes in a global folder
+-- and game configs in a separate folder per game
+InterfaceManager:SetFolder("FluentScriptHub")
+SaveManager:SetFolder("FluentScriptHub/specific-game")
+
+InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+SaveManager:BuildConfigSection(Tabs.Settings)
+
+
+Window:SelectTab(1)
+
+Fluent:Notify({
+    Title = "ITatzuki Hub",
+    Content = "Script Đã Tải Xong.",
+    Duration = 8
+})
+
+-- You can use the SaveManager:LoadAutoloadConfig() to load a config
+-- which has been marked to be one that auto loads!
+SaveManager:LoadAutoloadConfig()
