@@ -812,26 +812,23 @@ Tabs.Teleport:AddButton({
     end
 })
 
--- Biến kiểm soát Anti-AFK
+-- ================== Anti AFK Toggle ==================
 local antiAFKEnabled = false
 local antiAFKConnection
 
--- Toggle Anti-AFK
-Tabs.Player:AddToggle("AntiAFKToggle", {
+Player:AddToggle("AntiAFKToggle", {
     Title = "Anti AFK",
     Default = false,
     Callback = function(state)
         antiAFKEnabled = state
         if antiAFKEnabled then
-            -- Bật Anti-AFK
             local vu = game:GetService("VirtualUser")
             antiAFKConnection = game.Players.LocalPlayer.Idled:Connect(function()
-                vu:Button2Down(Vector2.new(0,0), workspace.CurrentCamera.CFrame)
+                vu:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
                 task.wait(1)
-                vu:Button2Up(Vector2.new(0,0), workspace.CurrentCamera.CFrame)
+                vu:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
             end)
         else
-            -- Tắt Anti-AFK
             if antiAFKConnection then
                 antiAFKConnection:Disconnect()
                 antiAFKConnection = nil
