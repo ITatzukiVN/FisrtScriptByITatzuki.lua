@@ -233,6 +233,28 @@ end)
     end
 })
 
+local Button = Tabs.Main:AddButton({
+    Title = "Ac6",
+    Description = "Nhấn để mở script",
+    Callback = function()
+        -- Script của bạn đặt trong đây
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-HttpSpy/my-Garbage/refs/heads/main/FeMusicExploit.lua"))()
+
+        -- Ví dụ: Teleport tới một part
+        local Players = game:GetService("Players")
+        local player = Players.LocalPlayer
+        local char = player.Character or player.CharacterAdded:Wait()
+        local hrp = char:WaitForChild("HumanoidRootPart")
+
+        local targetPart = workspace:FindFirstChild("TargetPart")
+        if targetPart then
+            hrp.CFrame = targetPart.CFrame + Vector3.new(0, 5, 0)
+        else
+            warn("Không tìm thấy part!")
+        end
+    end
+})
+
 -- Tạo Toggle 500
 local Farm500Toggle = Tabs.Farm:AddToggle("Farm500Toggle", {
     Title = "Farm 500",
